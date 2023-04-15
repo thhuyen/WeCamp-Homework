@@ -4,7 +4,7 @@
 
 - **NAB Innovation Center Vietnam**
 - **Program**: WeCamp batch 2
-- **Assessment**: Assignment 1
+- **Assessment**: Homeworks
 - **Authors**: Thanh Huyen
 - **Created date**: 15/04/2023
 - **Last modified**: 17/04/2023
