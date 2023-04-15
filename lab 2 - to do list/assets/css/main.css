@@ -1,0 +1,131 @@
+body {
+    /* margin: 0; */
+    /* padding: 0; */
+    font-family: 'Roboto', sans-serif;
+}
+/* -------------- same --------------*/
+
+#wrapper_app {
+    display: flex;
+    justify-content: space-between;
+    width: 1200px;
+    margin: auto;
+}
+section {
+    margin-top: 40px;
+}
+.block {
+    display: block;
+}
+.scale-input_icon {
+    transform: scale(1.5);
+}
+.icon {
+    font-size: 16px;
+    padding: 10px;
+    cursor: pointer;
+}
+.task {
+    width: 100%;
+    max-width: 580px;
+    padding: 15px 10px 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.icons-action {
+    float: right;
+}
+.icon-star {
+    padding: 0 10px;
+    font-weight: 500;
+}
+.icon-star-filled {
+    font-weight: 900;
+}
+#main_app {
+    flex-grow: 1;
+}
+/* --------------- header -------------*/
+header {
+    margin: 20px 0;
+}
+#title {
+    display: inline-block;
+    margin: 0;
+}
+.icon-add_task {
+    float: right;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+/* ---------------task priority ------------ */
+#title-priority{
+    color: palevioletred;
+}
+.task-priority {
+    background: peachpuff;
+}
+
+/* ---------------- task todo --------------- */
+#title-todo {
+    color: peru;
+}
+.task-todo {
+    background: peru;
+    color:aliceblue;
+}
+
+/* ----------------- task done --------------- */
+#title-done {
+    color: darkred;
+}
+.task-done {
+    background: darkred;
+    color:aliceblue;
+}
+
+/* --------------- create task ---------------- */
+#create_app {
+    min-width: 350px;
+    margin-top: 110px;
+    text-align: center;
+    padding: 20px 20px;
+    border: 2px solid slategray;
+    border-radius: 10px;
+    height: max-content;
+}
+#title-create_app {
+    color: slategray;
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 30px;
+
+}
+.group-task_types {
+    margin: 10px;
+}
+textarea#task_description,
+input#task_name {
+    width: 96%;
+    padding: 10px 5px;
+    margin: 10px 0;
+}
+.label-type {
+    margin-right: 10px;
+}
+
+#btn-save {
+    width: 100%;
+    color: aliceblue;
+    font-size: 15px;
+    padding: 15px;
+    margin-top: 30px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    background: slategray;
+    cursor: pointer;
+}

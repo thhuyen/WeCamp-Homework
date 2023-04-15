@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+    <!-- themify icon -->
+    <link rel="stylesheet" href="./assets/font/themify-icons-font/themify-icons.css">
+    
+    <!----------- GOOGLE FONTS ----------->
+    <style> @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap'); </style>
+
+    <!--------- CSS  --------->
+    <link rel="stylesheet" href="./assets/css/main.css">
+    
+</head>
+<body>
+    <div id="wrapper_app">
+        <div id="main_app">
+            <header>
+                <h2 id="title">TO DO LIST</h2>
+            </header>
+
+            <section id="priority">
+                <h3 id="title-priority"><i class="ti-star"></i> Priority tasks</h3>
+                <div class="task task-priority">
+                    <input type="checkbox" class="scale-input_icon checked_task" onchange="handleDone(this)">
+                    <label>Call Grandma</label>
+                    <div class="icons-action">
+                        <i class="fa-solid fa-star icon-star icon-star-filled" onclick="handleToTop(this)"></i>
+                        <i class="ti-pencil icon icon-pencil" onclick="handleEdit(this)"></i>
+                        <i class="ti-trash icon icon-trash" onclick="handleDelete(this)"></i>
+                    </div>
+                </div>
+    
+            </section>
+        
+            <section id="todo">
+                <h3 id="title-todo"><i class="ti-pencil-alt"></i> To do tasks</h3>
+                <div class="task task-todo"">
+                    <input type="checkbox" class="scale-input_icon  checked_task" onchange="handleDone(this)">
+                    <label>Attend the meeting</label>
+
+                    <div class="icons-action">
+                        <i class="fa-solid fa-star icon-star" onclick="handleToTop(this)"></i>
+                        <i class="ti-pencil icon icon-pencil" onclick="handleEdit(this)"></i>
+                        <i class="ti-trash icon icon-trash" onclick="handleDelete(this)"></i>
+                    </div>
+                </div>
+                
+            </section>
+        
+            <section id="done">
+                <h3 id="title-done"><i class="ti-check"></i> Done tasks</h3>
+                <div class="task task-done">
+                    <input type="checkbox" class="scale-input_icon checked_task" checked onchange="handleDone(this)">
+                    <label>Finish report</label>
+                    <div class="icons-action">
+                        <i class="fa-solid fa-star icon-star" onclick="handleToTop(this)"></i>
+                        <i class="ti-pencil icon icon-pencil" onclick="handleEdit(this)"></i>
+                        <i class="ti-trash icon icon-trash" onclick="handleDelete(this)"></i>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <div id="create_app">
+            <p id="title-create_app">What needs to be done?</p>
+    
+            <label class="block" for="task_name">Task name</label>
+            <input type="text" id="task_name">
+            
+            <div class="group-task_types">
+                <input class="scale-input_icon" type="radio" name="radio-type" id="radio-priority" value="priority">
+                <label class="label-type" for="radio-priority">Priority</label>
+    
+                <input class="scale-input_icon" type="radio" name="radio-type" id="radio-todo" value="todo" checked>
+                <label class="label-type" for="radio-todo">To do</label>
+    
+                <input class="scale-input_icon" type="radio" name="radio-type" id="radio-done" value="done">
+                <label for="radio-done">Done</label>
+            </div>
+
+            <button id="btn-save" class="btn-add">SAVE</button>
+        </div>
+    </div>
+
+    <script>
+        const $ = document.querySelector.bind(document);
+        const $$ = document.querySelectorAll.bind(document);
+
+        // handle add task
+        function handleAdd() {
+            function appendChild(taskName, taskId, taskClassName, isFilled, isChecked) {
+                const wrapperTask = document.createElement('div');
+                wrapperTask.className = `task ${taskClassName}`;
+                const child = `
+                    <input type="checkbox" class="scale-input_icon checked_task" ${isChecked ? 'checked' : ''} onchange = "handleDone(this)">
+                    <label>${taskName}</label>
+                    <div class="icons-action">
+                        <i class="fa-solid fa-star icon-star ${isFilled ? 'icon-star-filled' : ''}" onclick = "handleToTop(this)" ></i>
+                        <i class="ti-pencil icon icon-pencil" onclick="handleEdit(this)"></i>
+                        <i class="ti-trash icon icon-trash" onclick="handleDelete(this)"></i>
+                    </div> `;
+                wrapperTask.innerHTML = child;
+                $(`#${taskId}`).append(wrapperTask);
+            } 
+
+            const type = $('input[name = "radio-type"]:checked');
+            const name = $('#task_name').value;
+
+            if (!name)
+                alert('Please fill out task name!');
+            else {
+                switch(type.value) {
+                    case 'priority': appendChild(name, 'priority', 'task-priority', true); 
+                        break;
+                    case 'todo': appendChild(name, 'todo', 'task-todo'); 
+                        break;
+                    case 'done': appendChild(name, 'done', 'task-done', false, true); 
+                        break;
+                    default: throw new Error('No element checked!')
+                } 
+                $('#task_name').value = '';
+            }
+        }
+
+        $('.btn-add').addEventListener('click', handleAdd);
+
+         // handle delete task
+         function handleDelete(icon_trash) {
+            const parentLevel1 = icon_trash.parentElement.parentElement;
+            const parentLevel2 = icon_trash.parentElement.parentElement.parentElement;
+            parentLevel2.removeChild(parentLevel1);
+        }
+
+        
+        function handleClassName (element, name1, name2) {
+            if (name1 && name2) {
+                element.classList.remove(name1);
+                element.classList.add(name2);
+            }
+        }
+
+        // handle done task
+        function handleDone(checkbox) {
+            const task = checkbox.parentElement;
+            let icon_star = task.childNodes[5].childNodes[1];
+            
+            icon_star.classList.remove('icon-star-filled');
+            if(checkbox.checked) {
+                handleClassName(task, task.className.slice(5), 'task-done')
+                $('#done').append(task);
+            }
+            else {
+                handleClassName(task, 'task-done', 'task-todo')
+                $('#todo').append(task);
+            }
+        }   
+
+        // handle add priority
+        function handleToTop(icon_star) {
+            let checkbox = icon_star.parentElement;
+            const task = checkbox.parentElement;
+            
+            if (task.className.includes('priority')) {
+                icon_star.classList.remove('icon-star-filled');
+                handleClassName(task, 'task-priority', 'task-todo')
+                $('#todo').append(task);
+            }
+            else {
+                icon_star.classList.add('icon-star-filled');
+                handleClassName(task, task.className.slice(5), 'task-priority')
+
+                // find checkbox
+                while (checkbox.tagName !== 'INPUT') {
+                    checkbox = checkbox.previousElementSibling;
+                }
+                checkbox.checked = false;
+                $('#priority').append(task); 
+            }
+        }
+
+        // handle edit task
+        function handleEdit(icon_pencil) {
+            let count = 0;
+            let task = icon_pencil.parentElement.parentElement;
+            const icon_star = icon_pencil.previousElementSibling;
+            const label = task.childNodes[3];
+            const checkbox = label.previousElementSibling;
+
+            $('#task_name').value = label.innerText.trim();
+            switch(task.parentElement.id) {
+                case 'priority': $('#radio-priority').checked = true;
+                    break;
+                case 'todo': $('#radio-todo').checked = true;
+                    break;
+                case 'done': $('#radio-done').checked = true;
+                    break;
+                default: throw new Error('No find element checked!');
+            }
+            
+            $('#btn-save').classList.add('btn-save');
+            $('.btn-add').removeEventListener('click', handleAdd);
+
+            $('.btn-save').onclick = function() {
+                if(count === 0) {
+                    label.innerText = $('#task_name').value;
+                    const type = $('input[name = "radio-type"]:checked');
+                    switch(type.value) {
+                        case 'priority': 
+                            icon_star.classList.add('icon-star-filled');
+                            checkbox.checked = false;
+                            break;
+                        case 'todo':
+                            icon_star.classList.remove('icon-star-filled');
+                            checkbox.checked = false;
+                            break;
+                        case 'done': 
+                            icon_star.classList.remove('icon-star-filled');
+                            checkbox.checked = true;
+                            break;
+                        default: throw new Error('Something wrong!')
+                    }
+                    $(`#${type.value}`).append(task);
+                   
+                    handleClassName(task, task.className.slice(5), `task-${type.value}`)
+                    
+                    $('#task_name').value = '';       
+                    $('#radio-todo').checked = true;
+                    count++; 
+                }
+                this.classList.remove('btn-save');
+                $('.btn-add').addEventListener('click', handleAdd);
+            }
+
+        }
+    
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+/* ------------ body -------------- */
+.infor {
+    flex: 1;
+    text-align: center;
+}
+/* --- left --- */
+.infor--left {
+    position: relative;
+}
+.infor--left img {
+    position: absolute;
+}
+.img--circle{
+    top: 50%;
+    left: 25%;
+    transform: translateY(-50%);
+    width: 450px;
+}
+.img--product {
+    top: 20%;
+    left: 15%;
+    transform: translateY(-30%);
+    width: 620px;
+}
+/* ----- right ---- */
+.infor--right {
+    padding-top: 35px;
+    letter-spacing: 2px;
+}
+.infor--name {
+    font-weight: 600;
+    font-size: 30px;
+}
+.btn--shopnow{
+    background: black;
+    color: white;
+    padding: 10px 30px;
+    border-radius: 20px;
+    margin: 50px 0 20px 0;
+    cursor: pointer;
+}
+.icon--infor {
+    font-size: 20px;
+    padding: 0 10px;
+}
+
+
